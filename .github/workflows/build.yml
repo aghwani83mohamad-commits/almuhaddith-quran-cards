@@ -1,0 +1,22 @@
+name: Build Android App
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check project
+        run: |
+          ls -la
+          test -f package.json
+          test -d www
+
+      - name: Build
+        run: |
+          npm install
+          npm run build٨
