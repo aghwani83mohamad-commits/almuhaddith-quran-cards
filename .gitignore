@@ -1,0 +1,10 @@
+*.jks
+*.keystore
+upload-password.txt
+muhaddith-play/node_modules/
+muhaddith-play/android/app/src/main/assets/public
+muhaddith-play/android/app/src/main/assets/capacitor*.json
+muhaddith-play/android/capacitor-cordova-android-plugins/
+muhaddith-play/android/.gradle/
+muhaddith-play/android/build/
+muhaddith-play/android/app/build/

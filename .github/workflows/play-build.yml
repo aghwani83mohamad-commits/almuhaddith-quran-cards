@@ -1,0 +1,46 @@
+name: Build Play AAB
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: muhaddith-play
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '21' }
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - uses: android-actions/setup-android@v3
+      - name: Install and sync
+        run: |
+          npm install --no-audit --no-fund
+          npx cap sync android
+      - name: Decode upload keystore (skipped if secret missing -> unsigned build)
+        env:
+          KEYSTORE_B64: ${{ secrets.UPLOAD_KEYSTORE_B64 }}
+        run: |
+          if [ -n "$KEYSTORE_B64" ]; then
+            echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/upload.jks"
+            echo "KEYSTORE_PATH=$RUNNER_TEMP/upload.jks" >> "$GITHUB_ENV"
+          else
+            echo "No keystore secret: building UNSIGNED"
+          fi
+      - name: Build signed AAB
+        working-directory: muhaddith-play/android
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.UPLOAD_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.UPLOAD_KEY_PASSWORD }}
+        run: ./gradlew bundleRelease assembleRelease --no-daemon
+      - uses: actions/upload-artifact@v4
+        with:
+          name: almuhaddith-play
+          path: |
+            muhaddith-play/android/app/build/outputs/bundle/release/*.aab
+            muhaddith-play/android/app/build/outputs/apk/release/*.apk
+          if-no-files-found: error

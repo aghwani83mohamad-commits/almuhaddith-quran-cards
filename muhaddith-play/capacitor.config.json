@@ -1,0 +1,7 @@
+{
+  "appId": "com.almuhaddith.app",
+  "appName": "المحدث",
+  "webDir": "www",
+  "server": { "androidScheme": "https" },
+  "android": { "allowMixedContent": false, "backgroundColor": "#0F1318" }
+}
