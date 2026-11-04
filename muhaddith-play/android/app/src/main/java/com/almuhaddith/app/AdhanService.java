@@ -97,13 +97,7 @@ public class AdhanService extends Service {
     private void play(String str) {
         releasePlayer();
         try {
-            String str2 = "Fajr".equals(str) ? "adhan_fajr" : "adhan_main";
-            int identifier = getResources().getIdentifier(str2, "raw", getPackageName());
-            if (identifier == 0) {
-                identifier = getResources().getIdentifier(str2, "raw", getPackageName());
-            }
-            String path = AdhanFiles.path(this, str2);
-            if (path != null || identifier != 0) {
+            String path = AdhanFiles.path(this, "adhan_user");
                 this.audio = (AudioManager) getSystemService("audio");
                 try {
                     if (this.audio != null) {
@@ -117,7 +111,7 @@ public class AdhanService extends Service {
                 if (path != null) {
                     this.mp.setDataSource(path);
                 } else {
-                    AssetFileDescriptor openRawResourceFd = getResources().openRawResourceFd(identifier);
+                    AssetFileDescriptor openRawResourceFd = getAssets().openFd("public/snd/adhan.mp3");
                     this.mp.setDataSource(openRawResourceFd.getFileDescriptor(), openRawResourceFd.getStartOffset(), openRawResourceFd.getLength());
                     openRawResourceFd.close();
                 }
@@ -138,9 +132,6 @@ public class AdhanService extends Service {
                 this.mp.start();
                 playing = true;
                 startedAt = System.currentTimeMillis();
-                return;
-            }
-            stopAll();
         } catch (Throwable th2) {
             stopAll();
         }

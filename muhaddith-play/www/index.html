@@ -5056,10 +5056,7 @@ lock();
 
 <script id="adhanFilesDownloader">
 (function(){
-  var FILES=[
-    {f:'adhan_main.mp3',u:'https://raw.githubusercontent.com/Kiwifu/adhan-mp3/main/Adhan_Al_Haram_Al_Madani_-_Al_Madinah_1_%28%D8%A3%D8%B0%D8%A7%D9%86_%D8%A7%D9%84%D8%AD%D8%B1%D9%85_%D8%A7%D9%84%D9%85%D8%AF%D9%86%D9%8A_-_%D8%A7%D9%84%D9%85%D8%AF%D9%8A%D9%86%D8%A9_%D8%A7%D9%84%D9%85%D9%86%D9%88%D8%B1%D8%A9%29.mp3'},
-    {f:'adhan_fajr.mp3',u:'https://raw.githubusercontent.com/Kiwifu/adhan-mp3/main/Adhan_Fajr_Al_Haram_Al_Madani_%28%D8%A3%D8%B0%D8%A7%D9%86_%D8%A7%D9%84%D9%81%D8%AC%D8%B1_%D8%A7%D9%84%D8%AD%D8%B1%D9%85_%D8%A7%D9%84%D9%85%D8%AF%D9%86%D9%8A%29.mp3'}
-  ];
+  var FILES=[];
   var busy=false,tries=0;
   function ok(){return !!(window.AlyAdhan&&window.AlyAdhan.saveFile&&window.AlyAdhan.hasFile)}
   function allDone(){try{return FILES.every(function(x){return AlyAdhan.hasFile(x.f)})}catch(e){return false}}
@@ -5107,8 +5104,8 @@ lock();
     {key:'Maghrib',ar:'المغرب',icon:'🌇'},
     {key:'Isha',ar:'العشاء',icon:'🌙'}
   ];
-  const DEFAULT_MAIN_ADHAN='https://raw.githubusercontent.com/Kiwifu/adhan-mp3/main/Adhan_Al_Haram_Al_Madani_-_Al_Madinah_1_%28%D8%A3%D8%B0%D8%A7%D9%86_%D8%A7%D9%84%D8%AD%D8%B1%D9%85_%D8%A7%D9%84%D9%85%D8%AF%D9%86%D9%8A_-_%D8%A7%D9%84%D9%85%D8%AF%D9%8A%D9%86%D8%A9_%D8%A7%D9%84%D9%85%D9%86%D9%88%D8%B1%D8%A9%29.mp3';
-  const DEFAULT_FAJR_ADHAN='https://raw.githubusercontent.com/Kiwifu/adhan-mp3/main/Adhan_Fajr_Al_Haram_Al_Madani_%28%D8%A3%D8%B0%D8%A7%D9%86_%D8%A7%D9%84%D9%81%D8%AC%D8%B1_%D8%A7%D9%84%D8%AD%D8%B1%D9%85_%D8%A7%D9%84%D9%85%D8%AF%D9%86%D9%8A%29.mp3';
+  const DEFAULT_MAIN_ADHAN='snd/adhan.mp3';
+  const DEFAULT_FAJR_ADHAN='snd/adhan.mp3';
   let prayerData=null, prayerTimer=null, lastPlayedKey='', audioUnlocked=false;
 
   /* ===== المواقع: بورصة (كما كانت) + دمشق وريفها ===== */
